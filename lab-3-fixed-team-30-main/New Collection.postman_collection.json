@@ -1,0 +1,259 @@
+{
+	"info": {
+		"_postman_id": "42f4cd72-9c4a-48dc-91bd-8cfbffb45d0f",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Results Tests",
+			"item": [
+				{
+					"name": "Fail Response",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response matches expected JSON\", function() {\r",
+									"    var jsonResponse = pm.response.json();\r",
+									"    pm.expect(jsonResponse).to.eql({\r",
+									"    \"summary\": \"failed\",\r",
+									"    \"score\": 1,\r",
+									"    \"total\": 4\r",
+									"})\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"1\":\"Handball\",\"2\":\"Russia\",\"3\":\"Alkyl\",\"4\":\"4\"}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/questions/result",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"questions",
+								"result"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pass Response",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function() {\r",
+									"    pm.response.to.have.status(200);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"Response matches expected JSON\", function() {\r",
+									"    var jsonResponse = pm.response.json();\r",
+									"    pm.expect(jsonResponse).to.eql({\r",
+									"    \"summary\": \"passed\",\r",
+									"    \"score\": 4,\r",
+									"    \"total\": 4\r",
+									"})\r",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"1\":\"American football\",\"2\":\"Russia\",\"3\":\"Hydroxyl\",\"4\":\"9\"}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/questions/result",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"questions",
+								"result"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Questions",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"var expectedJson = [{\"question\":\"If soccer is called football in England, what is American football called in England?\",\"options\":[\"American football\",\"Combball\",\"Handball\",\"Touchdown\"], \"id\":\"1\"},{\"question\":\"What is the largest country in the world?\",\"options\":[\"Russia\",\"Canada\",\"China\",\"United States\"],\"id\":\"2\"},{\"question\":\"An organic compound is considered an alcohol if it has what functional group?\",\"options\":[\"Hydroxyl\",\"Carbonyl\",\"Alkyl\",\"Aldehyde\"],\"id\":\"3\"},{\"question\":\"What is the 100th digit of Pi?\",\"options\":[\"9\",\"4\",\"7\",\"2\"],\"id\":\"4\"}]\r",
+							"\r",
+							"pm.test(\"Response matches expected JSON\", function() {\r",
+							"    var jsonResponse = pm.response.json();\r",
+							"    _.each(jsonResponse, (item) => {\r",
+							"        pm.expect(item.question).to.eql(expectedJson[item.id-1].question)\r",
+							"        pm.expect(item.options).to.eql(expectedJson[item.id-1].options)\r",
+							"        pm.expect(item.id).to.eql(expectedJson[item.id-1].id)\r",
+							"        pm.expect(item).to.not.have.property('answer');\r",
+							"    })\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/questions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"questions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Count",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response matches expected JSON\", function() {\r",
+							"    var jsonResponse = pm.response.json();\r",
+							"    pm.expect(jsonResponse).to.eql({\"count\": 4})\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/questions/count",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"questions",
+						"count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function() {\r",
+							"    pm.response.to.have.status(200);\r",
+							"})\r",
+							"\r",
+							"pm.test(\"Response matches expected JSON\", function() {\r",
+							"    var jsonResponse = pm.response.json();\r",
+							"    pm.expect(jsonResponse).to.eql({\"question\":\"An organic compound is considered an alcohol if it has what functional group?\",\"options\":[\"Hydroxyl\",\"Carbonyl\",\"Alkyl\",\"Aldehyde\"],\"id\":\"3\"})\r",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/questions/:qId",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"questions",
+						":qId"
+					],
+					"variable": [
+						{
+							"key": "qId",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
